@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fake Store</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+  }
+  header {
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  .container {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+  }
+  .product {
+    background: #fff;
+    padding: 15px;
+    flex: 1;
+    max-width: 400px;
+  }
+  .product img {
+    width: 100%;
+  }
+  .cart {
+    background: #fff;
+    padding: 15px;
+    width: 300px;
+  }
+  h2 {
+    margin-top: 0;
+  }
+  button {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #218838;
+  }
+  .cart-items {
+    margin-top: 10px;
+  }
+  .cart-item {
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
+  }
+  .checkout {
+    margin-top: 20px;
+  }
+  input[type="text"], input[type="number"], input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Fake Store</h1>
+</header>
+
+<div class="container">
+  <!-- Product Section -->
+  <div class="product" id="product">
+    <h2>Sample Product</h2>
+    <img src="https://via.placeholder.com/400" alt="Product Image"/>
+    <p>Description of the product goes here. It is a fake product for your movie.</p>
+    <p><strong>Price: $<span id="product-price">49.99</span></strong></p>
+    <button onclick="addToCart()">Add to Cart</button>
+  </div>
+
+  <!-- Cart Section -->
+  <div class="cart" id="cart">
+    <h2>Shopping Cart</h2>
+    <div class="cart-items" id="cart-items">
+      <p>No items in cart.</p>
+    </div>
+    <p><strong>Total: $<span id="total-price">0.00</span></strong></p>
+    <button onclick="showCheckout()">Checkout</button>
+  </div>
+</div>
+
+<!-- Checkout Form -->
+<div class="checkout" id="checkout" style="display:none; padding:20px; background:#fff;">
+  <h2>Enter Card Information</h2>
+  <form id="paymentForm" onsubmit="return processPayment()">
+    <label for="name">Name on Card:</label>
+    <input type="text" id="name" required />
+    <label for="cardNumber">Card Number:</label>
+    <input type="text" id="cardNumber" required />
+    <label for="expDate">Expiration Date:</label>
+    <input type="text" id="expDate" placeholder="MM/YY" required />
+    <label for="cvv">CVV:</label>
+    <input type="number" id="cvv" required />
+    <button type="submit">Pay</button>
+  </form>
+</div>
+
+<script>
+  let cart = [];
+  const productPrice = parseFloat(document.getElementById('product-price').innerText);
+
+  function addToCart() {
+    cart.push({price: productPrice});
+    updateCart();
+  }
+
+  function updateCart() {
+    const cartItemsDiv = document.getElementById('cart-items');
+    cartItemsDiv.innerHTML = '';
+    if(cart.length === 0) {
+      cartItemsDiv.innerHTML = '<p>No items in cart.</p>';
+    } else {
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-item';
+        itemDiv.innerText = `Product - $${item.price.toFixed(2)}`;
+        cartItemsDiv.appendChild(itemDiv);
+      });
+      document.getElementById('total-price').innerText = total.toFixed(2);
+    }
+  }
+
+  function showCheckout() {
+    if(cart.length === 0) {
+      alert('Your cart is empty!');
+      return;
+    }
+    document.getElementById('checkout').style.display = 'block';
+  }
+
+  function processPayment() {
+    alert('Payment processed! (Fake)');
+    // Clear cart after "payment"
+    cart = [];
+    updateCart();
+    document.getElementById('checkout').style.display = 'none';
+    document.getElementById('paymentForm').reset();
+    return false; // prevent form submission
+  }
+</script>
+
+</body>
+</html>

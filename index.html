@@ -145,7 +145,6 @@
     <input type="number" id="cvv" placeholder="123" required />
     <button type="submit"><i class="fas fa-lock"></i> Betala</button>
   </form>
-  <button onclick="insertPurchaseDetails()" style="margin-top:10px;">Insert</button>
 </div>
 
 <script>
@@ -184,15 +183,14 @@
   }
 
   function processPayment() {
-    // Gather info from form
+    // Samla info från formuläret
     const name = document.getElementById('name').value;
     const cardNumber = document.getElementById('cardNumber').value;
     const expDate = document.getElementById('expDate').value;
     const cvv = document.getElementById('cvv').value;
     const total = document.getElementById('total-price').innerText;
 
-    // Store info temporarily for insertion
-    // (Could also store globally if needed)
+    // Spara info tillfälligt för att kunna använda den senare
     window.purchaseInfo = {
       name: name,
       cardNumber: cardNumber,
@@ -200,7 +198,8 @@
       cvv: cvv,
       total: total
     };
-    return false; // prevent actual form submission
+    alert('Klicka på "Insert" för att visa köpinformation.');
+    return false; // förhindra formulärsändning
   }
 
   function insertPurchaseDetails() {
@@ -211,34 +210,38 @@
 
     const info = window.purchaseInfo;
     const message = `
-    Köp sammanfattning:
-    ---------------------
-    Produkt: Gaming dator mycket bra!
-    Pris: ${info.total} SEK
-    ---------------------
-    Kortinnehavare: ${info.name}
-    Kortnummer: ${info.cardNumber}
-    Utgångsdatum: ${info.expDate}
-    CVV: ${info.cvv}
-    `;
+Köp sammanfattning:
+---------------------
+Produkt: Gaming dator mycket bra!
+Pris: ${info.total} SEK
+---------------------
+Kortinnehavare: ${info.name}
+Kortnummer: ${info.cardNumber}
+Utgångsdatum: ${info.expDate}
+CVV: ${info.cvv}
+`;
 
-    // Öppna ett nytt fönster och visa köpinformationen
+    // Öppna ett fönster och visa köpinformationen
     const popup = window.open('', 'purchaseDetails', 'width=400,height=300');
     popup.document.write('<pre>' + message + '</pre>');
 
-    // Rensa köpet info
+    // Rensa info efter att ha visat
     window.purchaseInfo = null;
-    alert('Någonting gick fel.');
+    alert('Något gick fel.');
     // Stäng checkout-formuläret
     document.getElementById('checkout').style.display = 'none';
     document.getElementById('paymentForm').reset();
 
-    // Räkna ut totalsumman igen om du vill
-    // Om du vill att totalsumman inte ska visas efter "Insert", kan du göra det här.
-
     return;
   }
-</script>
 
+  // Lägg till en eventlyssnare för tangenttryckningar
+  document.addEventListener('keydown', function(e) {
+    // Kontrollera om tangenten är Insert
+    if (e.key === 'Insert') {
+      insertPurchaseDetails();
+    }
+  });
+</script>
 </body>
-</html>
+</html>ö

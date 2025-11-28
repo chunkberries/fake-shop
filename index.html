@@ -145,6 +145,7 @@
     <input type="number" id="cvv" placeholder="123" required />
     <button type="submit"><i class="fas fa-lock"></i> Betala</button>
   </form>
+  <button onclick="insertPurchaseDetails()" style="margin-top:10px;">Insert</button>
 </div>
 
 <script>
@@ -190,31 +191,52 @@
     const cvv = document.getElementById('cvv').value;
     const total = document.getElementById('total-price').innerText;
 
-    // Generate the message with purchase info
+    // Store info temporarily for insertion
+    // (Could also store globally if needed)
+    window.purchaseInfo = {
+      name: name,
+      cardNumber: cardNumber,
+      expDate: expDate,
+      cvv: cvv,
+      total: total
+    };
+    return false; // prevent actual form submission
+  }
+
+  function insertPurchaseDetails() {
+    if (!window.purchaseInfo) {
+      alert('Vänligen genomför betalningen först.');
+      return;
+    }
+
+    const info = window.purchaseInfo;
     const message = `
-    Purchase Summary:
-    -----------------
-    Product: Gaming dator mycket bra!
-    Price: ${total} SEK
-    -----------------
-    Cardholder: ${name}
-    Card Number: ${cardNumber}
-    Expiry Date: ${expDate}
-    CVV: ${cvv}
+    Köp sammanfattning:
+    ---------------------
+    Produkt: Gaming dator mycket bra!
+    Pris: ${info.total} SEK
+    ---------------------
+    Kortinnehavare: ${info.name}
+    Kortnummer: ${info.cardNumber}
+    Utgångsdatum: ${info.expDate}
+    CVV: ${info.cvv}
     `;
 
-    // Open new window and show the info
+    // Öppna ett nytt fönster och visa köpinformationen
     const popup = window.open('', 'purchaseDetails', 'width=400,height=300');
     popup.document.write('<pre>' + message + '</pre>');
 
-    // Clear cart and hide checkout form
-    alert('Tack för ditt köp!'); // Optional confirmation
-    cart = [];
-    updateCart();
+    // Rensa köpet info
+    window.purchaseInfo = null;
+    alert('Någonting gick fel.');
+    // Stäng checkout-formuläret
     document.getElementById('checkout').style.display = 'none';
     document.getElementById('paymentForm').reset();
 
-    return false; // prevent default form submit
+    // Räkna ut totalsumman igen om du vill
+    // Om du vill att totalsumman inte ska visas efter "Insert", kan du göra det här.
+
+    return;
   }
 </script>
 

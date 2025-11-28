@@ -167,7 +167,7 @@
         total += item.price;
         const itemDiv = document.createElement('div');
         itemDiv.className = 'cart-item';
-        itemDiv.innerText = `{item.name} - $${item.price.toFixed(2)}`;
+        itemDiv.innerText = `Dator - $${item.price.toFixed(2)}`;
         cartItemsDiv.appendChild(itemDiv);
       });
       document.getElementById('total-price').innerText = total.toFixed(2);

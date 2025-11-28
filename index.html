@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Fake Store</title>
+<title>Datorify!</title>
+<!-- Font Awesome CDN for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -14,9 +16,23 @@
   header {
     background: #333;
     color: #fff;
-    padding: 10px;
-    text-align: center;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
   }
+  /* Logo icon in top left corner */
+  .logo {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  .logo i {
+    color: #fff;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 1.5em;
+  }
+
   .container {
     display: flex;
     padding: 20px;
@@ -27,14 +43,19 @@
     padding: 15px;
     flex: 1;
     max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
   .product img {
     width: 100%;
+    border-radius: 8px;
   }
   .cart {
     background: #fff;
     padding: 15px;
     width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
   h2 {
     margin-top: 0;
@@ -45,6 +66,11 @@
     border: none;
     padding: 10px;
     cursor: pointer;
+    border-radius: 4px;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   button:hover {
     background: #218838;
@@ -58,55 +84,66 @@
   }
   .checkout {
     margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
   input[type="text"], input[type="number"], input[type="email"] {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
     margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Fake Store</h1>
+  <div class="logo"><i class="fas fa-shopping-bag"></i></div>
+  <h1>Datorify!</h1>
 </header>
 
 <div class="container">
   <!-- Product Section -->
   <div class="product" id="product">
-    <h2>Sample Product</h2>
+    <h2>Gaming dator mycket bra! <i class="fas fa-box-open"></i></h2>
     <img src="https://via.placeholder.com/400" alt="Product Image"/>
-    <p>Description of the product goes here. It is a fake product for your movie.</p>
-    <p><strong>Price: $<span id="product-price">49.99</span></strong></p>
-    <button onclick="addToCart()">Add to Cart</button>
+    <p>Perfekt dator för hela familjen, har allt som krävs för en skön spelupplevelse! 60% rabatt hela året!<i class="fas fa-info-circle"></i></p>
+    <p><strong>Pris: <span id="product-price">13299</span> SEK</strong></p>
+    <button onclick="addToCart()"><i class="fas fa-cart-plus"></i> Lägg i varukorg</button>
   </div>
 
   <!-- Cart Section -->
   <div class="cart" id="cart">
-    <h2>Shopping Cart</h2>
+    <h2>Varukorg <i class="fas fa-shopping-cart"></i></h2>
     <div class="cart-items" id="cart-items">
-      <p>No items in cart.</p>
+      <p>Inga föremål i varukorgen.</p>
     </div>
-    <p><strong>Total: $<span id="total-price">0.00</span></strong></p>
-    <button onclick="showCheckout()">Checkout</button>
+    <p><strong>Total: <span id="total-price">0.00</span></strong> SEK</p>
+    <button onclick="showCheckout()"><i class="fas fa-credit-card"></i> Kassa</button>
   </div>
 </div>
 
 <!-- Checkout Form -->
-<div class="checkout" id="checkout" style="display:none; padding:20px; background:#fff;">
-  <h2>Enter Card Information</h2>
+<div class="checkout" id="checkout">
+  <h2>Enter Card Information <i class="fas fa-credit-card"></i></h2>
   <form id="paymentForm" onsubmit="return processPayment()">
     <label for="name">Name on Card:</label>
-    <input type="text" id="name" required />
+    <input type="text" id="name" placeholder="John Doe" required />
     <label for="cardNumber">Card Number:</label>
-    <input type="text" id="cardNumber" required />
+    <input type="text" id="cardNumber" placeholder="1111 2222 3333 4444" required />
     <label for="expDate">Expiration Date:</label>
     <input type="text" id="expDate" placeholder="MM/YY" required />
     <label for="cvv">CVV:</label>
-    <input type="number" id="cvv" required />
-    <button type="submit">Pay</button>
+    <input type="number" id="cvv" placeholder="123" required />
+    <button type="submit"><i class="fas fa-lock"></i> Pay</button>
   </form>
 </div>
 
